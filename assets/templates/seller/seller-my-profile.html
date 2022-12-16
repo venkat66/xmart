@@ -1,0 +1,411 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>My Profile</title>
+	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
+	<link rel="icon" href="{% static 'admin/assets/img/cart.png' %}" type="image/x-icon"/>
+
+	<!-- Fonts and icons -->
+	<script src="{% static 'admin/assets/js/plugin/webfont/webfont.min.js' %}"></script>
+	<script>
+		WebFont.load({
+			google: {"families":["Lato:300,400,700,900"]},
+			custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ["{% static 'admin/assets/css/fonts.min.css' %}"]},
+			active: function() {
+				sessionStorage.fonts = true;
+			}
+		});
+	</script>
+
+	<!-- CSS Files -->
+	<link rel="stylesheet" href="{% static 'admin/assets/css/bootstrap.min.css' %}">
+	<link rel="stylesheet" href="{% static 'admin/assets/css/atlantis.min.css' %}">
+
+	<!-- CSS Just for demo purpose, don't include it in your project -->
+	<link rel="stylesheet" href="{% static 'admin/assets/css/demo.css' %}">
+	<script src="{% static 'main/js/cities.js' %}"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script type="text/javascript">
+		function profilvalidation(){
+			var name = document.myform.seller_name
+			var email = document.myform.seller_email
+			var mobile = document.myform.seller_mobile
+			var password = document.myform.seller_password
+			var state = document.myform.seller_state
+			var city = document.myform.seller_city
+			var picture = document.myform.seller_picture
+			var dob = document.myform.seller_dob
+	
+			if (name.value.length <= 0){
+					alert("Username can't be empty")
+					name.focus();
+					return false;
+				}
+				if (email.value.length <= 0){
+					alert("Email can't be empty")
+					email.focus()
+					return false;
+				}
+				if (mobile.value.length <= 9){
+					alert("Mobile number must be atleast 10 Digits")
+					mobile.focus()
+					return false;
+				}
+				if (password.value.length <= 0){
+					alert("Password can't be empty")
+					password.focus()
+					return false;
+				}
+	
+				if (state.value == 'Choose State'){
+					alert("Please Select State")
+					state.focus()
+					return false;
+				}
+				if (city.value == 'Choose City'){
+					alert("Please Select City")
+					city.focus()
+					return false;
+				}
+				if (dob.value.length <= 0){
+					alert("Date of birth can't be empty")
+					dob.focus()
+					return false;
+				}
+		}
+	</script>
+</head>
+<body>
+	<div class="wrapper">
+		<div class="main-header">
+			<!-- Logo Header -->
+			<div class="logo-header" data-background-color="blue">
+				
+				<a href="{% url 'seller_dashboard' %}" class="logo">
+					<h2 class="navbar-brand" style="color: white;font-weight:bolder;">X Mart</h2>
+					<!-- <img src="{% static 'admin/assets/img/logo.svg' %}" alt="navbar brand" class="navbar-brand"> -->
+				</a>
+				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon">
+						<i class="icon-menu"></i>
+					</span>
+				</button>
+				<button class="topbar-toggler more"><i class="icon-options-vertical"></i></button>
+				<div class="nav-toggle">
+					<button class="btn btn-toggle toggle-sidebar">
+						<i class="icon-menu"></i>
+					</button>
+				</div>
+			</div>
+			<!-- End Logo Header -->
+
+			<!-- Navbar Header -->
+			<nav class="navbar navbar-header navbar-expand-lg" data-background-color="blue2">
+				
+				<div class="container-fluid">
+					<div class="collapse" id="search-nav">
+						<form class="navbar-left navbar-form nav-search mr-md-3">
+							<div class="input-group">
+								<div class="input-group-prepend">
+									<button type="submit" class="btn btn-search pr-1">
+										<i class="fa fa-search search-icon"></i>
+									</button>
+								</div>
+								<input type="text" placeholder="Search ..." class="form-control">
+							</div>
+						</form>
+					</div>
+					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
+						<li class="nav-item toggle-nav-search hidden-caret">
+							<a class="nav-link" data-toggle="collapse" href="#search-nav" role="button" aria-expanded="false" aria-controls="search-nav">
+								<i class="fa fa-search"></i>
+							</a>
+						</li>
+						
+						<li class="nav-item dropdown hidden-caret">
+							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
+								<div class="avatar-sm">
+									<img src="/media/{{seller.seller_picture}}" alt="..." class="avatar-img rounded-circle">
+								</div>
+							</a>
+							<ul class="dropdown-menu dropdown-user animated fadeIn">
+								<div class="dropdown-user-scroll scrollbar-outer">
+									<li>
+										<div class="user-box">
+											<div class="avatar-lg"><img src="/media/{{seller.seller_picture}}" alt="image profile" class="avatar-img rounded"></div>
+											<div class="u-text">
+												<h4>{{seller.seller_name}}</h4>
+												<p class="text-muted">{{seller.seller_email}}</p><a href="" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
+											</div>
+										</div>
+									</li>
+									<li>
+										
+										<div class="dropdown-divider"></div>
+										<a class="dropdown-item" href="{% url 'seller_logout' %}">Logout</a>
+									</li>
+								</div>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</nav>
+			<!-- End Navbar -->
+		</div>
+
+		<!-- Sidebar -->
+		<div class="sidebar sidebar-style-2">			
+			<div class="sidebar-wrapper scrollbar scrollbar-inner">
+				<div class="sidebar-content">
+					
+					<ul class="nav nav-primary">
+						<li class="nav-item active">
+							<a  href="{% url 'seller_dashboard' %}" class="collapsed" aria-expanded="false">
+								<i class="fas fa-home"></i>
+								<p>Dashboard</p>
+							</a>
+						</li>
+						
+						<li class="nav-item">
+							<a data-toggle="collapse" href="#base">
+								<i class="fas fa-layer-group"></i>
+								<p>Products</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="base">
+								<ul class="nav nav-collapse">
+									<li>
+										<a href="{% url 'seller_add_products' %}">
+											<span class="sub-item">Add Products</span>
+										</a>
+									</li>
+									<li>
+										<a href="{% url 'seller_manage_products' %}">
+											<span class="sub-item">Manage Products</span>
+										</a>
+									</li>
+									
+								</ul>
+							</div>
+						</li>
+						
+						<li class="nav-item">
+							<a data-toggle="collapse" href="#sidebarLayouts">
+								<i class="fas fa-th-list"></i>
+								<p>Orders</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="sidebarLayouts">
+								<ul class="nav nav-collapse">
+									<li>
+										<a href="{% url 'seller_pending_orders' %}">
+											<span class="sub-item">Pending Orders</span>
+										</a>
+									</li>
+									<li>
+										<a href="{% url 'seller_completed_orders' %}">
+											<span class="sub-item">Completed Orders</span>
+										</a>
+									</li>
+									
+								</ul>
+							</div>
+						</li>
+						<li class="nav-item">
+							<a data-toggle="collapse" href="#feedback">
+								<i class="fas fa-layer-group"></i>
+								<p>Feedbacks</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="feedback">
+								<ul class="nav nav-collapse">
+									<li>
+										<a href="{% url 'seller_feedbacks_product' %}">
+											<span class="sub-item">View Feedbacks</span>
+										</a>
+									</li>
+									<li>
+										<a href="{% url 'seller_feedbacks_location' %}">
+											<span class="sub-item">Location Based</span>
+										</a>
+									</li>
+									
+								</ul>
+							</div>
+						</li>
+						
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!-- End Sidebar -->
+
+		<div class="main-panel" style="padding-top: 50px;">
+			<div class="content" >
+				
+				<div class="row">
+         
+                    <div class="col-xl-4">
+                        <!-- Profile picture card-->
+                        <div class="card mb-4 mb-xl-0">
+                            <div class="card-header">Profile Picture</div>
+                            <div class="card-body text-center">
+                                <!-- Profile picture image-->
+                                <img class="img-account-profile rounded-circle mb-2" width="370px" height="350px" src="/media/{{seller.seller_picture}}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-8">
+                        <!-- Account details card-->
+                        <div class="card mb-4">
+                            <div class="card-header"><h3>Account Details</h3></div>
+                            <div class="card-body">
+                                <form action="" method="post" enctype="multipart/form-data" name="myform" onsubmit="return profilvalidation()">
+                                   {% csrf_token %}
+                                    
+                                    <!-- Form Group (username)-->
+                                    <!-- Form Row-->
+                                    <div class="row gx-3 mb-3">
+                                       
+                                    
+                                       <div class="col-md-6">
+                                           <label class="small mb-1" for="inputName">Full Name</label>
+                                           <input name="seller_name" class="form-control" id="inputName" type="text" placeholder="Name" value="{{seller.seller_name}}">
+                                       </div>
+                                       <div class="col-md-6">
+                                        <label class="small mb-1" for="inputPassword">Password</label>
+                                        <input  name="seller_password" class="form-control" id="inputPassword" type="password" placeholder="Password" value="{{seller.seller_password}}">
+                                    </div>
+                                       <!-- Form Group (location)-->
+                                       <div class="col-md-6">
+										<label class="small mb-1" for="stateSelect">State</label>
+										<select class="form-control" name="seller_state" id="stateSelect" onchange="makeSubmenu(this.value)">
+											<option selected hidden>{{seller.seller_state}}</option>
+											{% for i in states %}
+											<option>{{i}}</option>
+											{% endfor %}
+										</select>
+									</div>
+                                       
+                                        <!-- Form Group (password)-->
+                                        
+                                        <!-- Form Group (location)-->
+                                        <div class="col-md-6">
+											<label class="small mb-1" for="citySelect">City</label>
+											<select class="form-control" name="seller_city" id="citySelect">
+											   <option selected>{{seller.seller_city}}</option>
+										   </select>
+										</div>
+                                    </div>
+                                    <!-- Form Group (email address)-->
+                                    
+                                    <!-- Form Row-->
+                                    <div class="row gx-3 mb-3">
+                                       <div class="col-md-6">
+                                           <label class="small mb-1" for="inputEmailAddress">Email address</label>
+                                           <input name="seller_email" style="color:black;font-weight:bold" class="form-control" id="inputEmailAddress" readonly type="email" placeholder="Enter your email address" value="{{seller.seller_email}}">
+                                       </div>
+                                       <div class="col-md-6">
+                                           <label class="small mb-1" for="inputBirthday">Birthday</label>
+                                           <input name="seller_dob" style="color:black;font-weight:bold" readonly class="form-control" id="inputBirthday" type="text" placeholder="Enter your birthday" value="{{seller.seller_dob}}">
+                                       </div>
+                                        <!-- Form Group (phone number)-->
+                                        <div class="col-md-6">
+                                            <label class="small mb-1" for="inputPhone">Phone number</label>
+                                            <input name="seller_mobile" class="form-control" id="inputPhone" type="tel" placeholder="Enter your phone number" value="{{seller.seller_mobile}}">
+                                        </div>
+                                        <!-- Form Group (birthday)-->
+                                        
+                                        <div class="col-md-6">
+                                           <label class="small mb-1" for="inputProfile">Profile Picture</label>
+                                           <input name="seller_picture" class="form-control" id="inputProfile" type="file"  placeholder="Enter your birthday" value="{{profile.user_dob}}">
+                                       </div>
+                                    </div>
+                                    <!-- Save changes button-->
+                                    <button class="btn btn-primary" type="submit">Save changes</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+			</div>
+			<footer class="footer">
+				<div class="container-fluid">
+					
+					<div class="copyright ml-auto">
+						Copyrights 2018 All Rights Reserved  | Designed and Developed   by <a href="">FZINFOTECH</a>
+					</div>				
+				</div>
+			</footer>
+		</div>
+		{% if messages %}              
+	{% for message in messages %}
+	  {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+		  <script>swal({
+			title: "Error :",
+			text: "{{message}}",
+			icon: "warning",
+			button: "OK",
+		  });
+		</script>
+		
+	  {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+		  <script>swal({
+			title: "Success :)",
+			text: "{{message}}",
+			icon: "success",
+			button: "OK",
+		  });
+		</script>
+	  {% endif %}              
+	{% endfor %} 
+  {% endif %}
+		
+		<!-- End Custom template -->
+	</div>
+	<!--   Core JS Files   -->
+	<script src="{% static 'admin/assets/js/core/jquery.3.2.1.min.js' %}"></script>
+	<script src="{% static 'admin/assets/js/core/popper.min.js' %}"></script>
+	<script src="{% static 'admin/assets/js/core/bootstrap.min.js' %}"></script>
+
+	<!-- jQuery UI -->
+	<script src="{% static 'admin/assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js' %}"></script>
+	<script src="{% static 'admin/assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js' %}"></script>
+
+	<!-- jQuery Scrollbar -->
+	<script src="{% static 'admin/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js' %}"></script>
+
+
+	<!-- Chart JS -->
+	<script src="{% static 'admin/assets/js/plugin/chart.js/chart.min.js' %}"></script>
+
+	<!-- jQuery Sparkline -->
+	<script src="{% static 'admin/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js' %}"></script>
+
+	<!-- Chart Circle -->
+	<script src="{% static 'admin/assets/js/plugin/chart-circle/circles.min.js' %}"></script>
+
+	<!-- Datatables -->
+	<script src="{% static 'admin/assets/js/plugin/datatables/datatables.min.js' %}"></script>
+
+	<!-- Bootstrap Notify -->
+	<script src="{% static 'admin/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js' %}"></script>
+
+	<!-- jQuery Vector Maps -->
+	<script src="{% static 'admin/assets/js/plugin/jqvmap/jquery.vmap.min.js' %}"></script>
+	<script src="{% static 'admin/assets/js/plugin/jqvmap/maps/jquery.vmap.world.js' %}"></script>
+
+	<!-- Sweet Alert -->
+	<script src="{% static 'admin/assets/js/plugin/sweetalert/sweetalert.min.js' %}"></script>
+
+	<!-- Atlantis JS -->
+	<script src="{% static 'admin/assets/js/atlantis.min.js' %}"></script>
+
+	<!-- Atlantis DEMO methods, don't include it in your project! -->
+	<script src="{% static 'admin/assets/js/setting-demo.js' %}"></script>
+	<script src="{% static 'admin/assets/js/demo.js' %}"></script>
+	
+</body>
+</html>

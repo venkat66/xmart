@@ -1,0 +1,602 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Registration</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="{% static 'main/images/icons/cart.png' %}"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'main/vendor/bootstrap/css/bootstrap.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'main/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'main/fonts/iconic/css/material-design-iconic-font.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'main/fonts/linearicons-v1.0.0/icon-font.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'main/vendor/animate/animate.css' %}">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="{% static 'main/vendor/css-hamburgers/hamburgers.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'main/vendor/animsition/css/animsition.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'main/vendor/select2/select2.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'main/vendor/perfect-scrollbar/perfect-scrollbar.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'main/css/util.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'main/css/main.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'main/css/form.css' %}">
+	<script src="{% static 'main/js/cities.js' %}"></script>
+
+<!--===============================================================================================-->
+<script type="text/javascript">
+	function registervalidation(){
+		var name = document.myform.customer_name
+		var email = document.myform.customer_email
+		var mobile = document.myform.customer_mobile
+		var password = document.myform.customer_password
+		var state = document.myform.customer_state
+		var city = document.myform.customer_city
+		var picture = document.myform.customer_picture
+		var dob = document.myform.customer_dob
+
+		if (name.value.length <= 0){
+                alert("Username can't be empty")
+                name.focus();
+                return false;
+            }
+			if (email.value.length <= 0){
+                alert("Email can't be empty")
+                email.focus()
+                return false;
+            }
+			if (mobile.value.length <= 9){
+                alert("Mobile number must be atleast 10 Digits")
+                mobile.focus()
+                return false;
+            }
+            if (password.value.length <= 0){
+                alert("Password can't be empty")
+                password.focus()
+                return false;
+            }
+
+			if (state.value == 'Choose State'){
+                alert("Please Select State")
+                state.focus()
+                return false;
+            }
+			if (city.value == 'Choose City'){
+                alert("Please Select City")
+                city.focus()
+                return false;
+            }
+			if (picture.value <= 0){
+				alert("Please select picture")
+				picture.focus()
+				return false;
+			}
+            if (dob.value.length <= 0){
+                alert("Date of birth can't be empty")
+                dob.focus()
+                return false;
+            }
+	}
+</script>
+</head>
+<body class="animsition">
+	
+	<!-- Header -->
+	<header class="header-v3">
+		<!-- Header desktop -->
+		<div class="container-menu-desktop trans-03">
+			<div class="wrap-menu-desktop">
+				<nav class="limiter-menu-desktop p-l-45">
+					
+					<!-- Logo desktop -->		
+					<a href="{% url 'index' %}" class="logo mb-4">
+						<h4 style="color: white;">X Mart</h4>
+						<!-- <img src="images/icons/logo-02.png" alt="IMG-LOGO"> -->
+					</a>
+
+					<!-- Menu desktop -->
+					<div class="menu-desktop">
+						<ul class="main-menu">
+							<li>
+								<a href="{% url 'index' %}">Home</a>
+								<!-- <ul class="sub-menu">
+									<li><a href="{% url 'index' %}">Homepage 1</a></li>
+									<li><a href="home-02.html">Homepage 2</a></li>
+									<li><a href="home-03.html">Homepage 3</a></li>
+								</ul> -->
+							</li>
+
+							
+
+							<!-- <li class="label1" data-label1="hot">
+								<a href="{% url 'customer_cart' %}">Features</a>
+							</li> -->
+
+							<li>
+								<a href="{% url 'customer_login' %}">Customer</a>
+							</li>
+
+							<li>
+								<a href="{% url 'seller_login' %}">Seller</a>
+							</li>
+
+							<li>
+								<a href="{% url 'admin_login' %}">Admin</a>
+							</li>
+
+							<li>
+								<a href="{% url 'about' %}">About</a>
+							</li>
+
+							<li>
+								<a href="{% url 'contact' %}">Contact</a>
+							</li>
+						</ul>
+					</div>	
+
+					<!-- Icon header -->
+					<div class="wrap-icon-header flex-w flex-r-m h-full">							
+						<!-- <div class="flex-c-m h-full p-r-25 bor6">
+							<div class="icon-header-item cl0 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify="2">
+								<i class="zmdi zmdi-shopping-cart"></i>
+							</div>
+						</div> -->
+							
+						<!-- <div class="flex-c-m h-full p-lr-19">
+							<div class="icon-header-item cl0 hov-cl1 trans-04 p-lr-11 js-show-sidebar">
+								<i class="zmdi zmdi-menu"></i>
+							</div>
+						</div> -->
+					</div>
+				</nav>
+			</div>	
+		</div>
+
+		<!-- Header Mobile -->
+		<div class="wrap-header-mobile">
+			<!-- Logo moblie -->		
+			<div class="logo-mobile">
+				<a href="{% url 'index' %}"><h4 style="color: black;">X Mart</h4></a>
+			</div>
+
+			<!-- Icon header -->
+			
+
+			<!-- Button show menu -->
+			<div class="btn-show-menu-mobile hamburger hamburger--squeeze">
+				<span class="hamburger-box">
+					<span class="hamburger-inner"></span>
+				</span>
+			</div>
+		</div>
+
+
+		<!-- Menu Mobile -->
+		<div class="menu-mobile">
+			<ul class="main-menu-m">
+				<li>
+					<a href="{% url 'index' %}">Home</a>
+					
+					
+				</li>
+
+				<li>
+					<a href="{% url 'customer_login' %}">Customer</a>
+				</li>
+
+				
+
+				<li>
+					<a href="{% url 'seller_login' %}">Seller</a>
+				</li>
+
+				<li>
+					<a href="{% url 'admin_login' %}">Admin</a>
+				</li>
+
+				<li>
+					<a href="{% url 'about' %}">About</a>
+				</li>
+
+				<li>
+					<a href="{% url 'contact' %}">Contact</a>
+				</li>
+			</ul>
+		</div>
+
+		<!-- Modal Search -->
+		<div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
+			<button class="flex-c-m btn-hide-modal-search trans-04">
+				<i class="zmdi zmdi-close"></i>
+			</button>
+
+			<form class="container-search-header">
+				<div class="wrap-search-header">
+					<input class="plh0" type="text" name="search" placeholder="Search...">
+
+					<button class="flex-c-m trans-04">
+						<i class="zmdi zmdi-search"></i>
+					</button>
+				</div>
+			</form>
+		</div>
+	</header>
+
+
+
+
+	<!-- Title page -->
+	<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('static/main/images/bg-01.jpg');">
+		<h2 class="ltext-105 cl0 txt-center">
+			Customer Registration
+		</h2>
+	</section>	
+
+
+	
+
+	<!-- form -->
+	<div class="container px-2 px-md-4 py-5 mx-auto">
+		<div class="card card0 border-0">
+			<div class="row d-flex">
+				<div class="col-lg-5">
+					<div class="card1 pb-5">
+						<div class="row px-3">
+							<h5 class="logo"><u>Registration Form</u></h5>
+						</div>
+						<div class="row px-3 justify-content-center mt-4 mb-5"> 
+							<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+								<ol class="carousel-indicators">
+									
+									<li data-target="#carouselExampleIndicators" data-slide-to="0" id="li1" class="active" style="background: url('/media/{{fed1.feedback_customer.customer_picture}}');background-size: cover;"></li>
+									<li data-target="#carouselExampleIndicators" data-slide-to="1" id="li2" style="background: url('/media/{{fed2.feedback_customer.customer_picture}}');background-size: cover;"></li>
+									<li data-target="#carouselExampleIndicators" data-slide-to="2" id="li3"  style="background: url('/media/{{fed3.feedback_customer.customer_picture}}');background-size: cover;"></li> 
+									<li data-target="#carouselExampleIndicators" data-slide-to="3" id="li4" style="background: url('/media/{{fed4.feedback_customer.customer_picture}}');background-size: cover;"></li>
+								</ol>
+								<div class="carousel-inner">
+									
+									<div class="carousel-item active card border-0 card-0">
+										<div class="text-center">
+											<img src="/media/{{fed1.feedback_customer.customer_picture}}" class="img-fluid profile-pic">
+										</div>
+										<h6 class="font-weight-bold mt-5">{{fed1.feedback_customer.customer_name}}</h6> <small class="mb-2">{{fed1.feedback_product.product_name}}</small>
+										<hr width="50%">
+										<p class="content mt-2 mb-0">{{fed1.feedback_message}}</p>
+									</div>
+									
+									
+									<div class="carousel-item  card border-0 card-0">
+										<div class="text-center">
+											<img src="/media/{{fed2.feedback_customer.customer_picture}}" class="img-fluid profile-pic">
+										</div>
+										<h6 class="font-weight-bold mt-5">{{fed2.feedback_customer.customer_name}}</h6> <small class="mb-2">{{fed2.feedback_product.product_name}}</small>
+										<hr width="50%">
+										<p class="content mt-2 mb-0">{{fed2.feedback_message}}</p>
+									</div>
+									<div class="carousel-item card border-0 card-0">
+										<div class="text-center">
+											<img src="/media/{{fed3.feedback_customer.customer_picture}}" class="img-fluid profile-pic">
+										</div>
+										<h6 class="font-weight-bold mt-5">{{fed3.feedback_customer.customer_name}}</h6> <small class="mb-2">{{fed3.feedback_product.product_name}}</small>
+										<hr width="50%">
+										<p class="content mt-2 mb-0">{{fed3.feedback_message}}</p>
+									</div>
+									<div class="carousel-item card border-0 card-0">
+										<div class="text-center">
+											<img src="/media/{{fed3.feedback_customer.customer_picture}}" class="img-fluid profile-pic">
+										</div>
+										<h6 class="font-weight-bold mt-5">{{fed3.feedback_customer.customer_name}}</h6> <small class="mb-2">{{fed4.feedback_product.product_name}}</small>
+										<hr width="50%">
+										<p class="content mt-2 mb-0">{{fed3.feedback_message}}</p>
+									</div>
+									
+								</div>
+							</div>
+						</div>
+						<br>
+					</div>
+				</div>
+				<div class="col-lg-7">
+					<div class="card2 card border-0 px-4 px-sm-5 py-5">
+						<small class="text-right mb-3"><a href="{% url 'customer_login' %}"><u>I already have an account</u></a></small>
+						<h3 class="mb-1">Sign up</h3>
+						
+						<form action="" method="post" enctype="multipart/form-data" name="myform" onsubmit="return registervalidation()">
+							{% csrf_token %}
+						<div class="row mt-3">
+							<div class="col-md-6">
+								<label class="mb-0"><h6 class="mb-0 text-sm">Full Name</h6></label>
+								<input type="text" name="customer_name" placeholder="Your Full Name">
+							</div>
+							<div class="col-md-6">
+								<label class="mb-0"><h6 class="mb-0 text-sm">Email Address</h6></label>
+								<input type="text" name="customer_email" placeholder="Your Email here">
+							</div>
+						</div>
+						<div class="row mt-3">
+							<div class="col-md-6">
+								<label class="mb-0"><h6 class="mb-0 text-sm">Mobile</h6></label>
+								<input type="tel" name="customer_mobile" placeholder="Your Mobile Number">
+							</div>
+							<div class="col-md-6">
+								<label class="mb-0"><h6 class="mb-0 text-sm">Password</h6></label>
+								<input type="password" name="customer_password" placeholder="Your Password here">
+							</div>
+						</div>
+						<div class="row mt-3">
+							<div class="col-md-6">
+								<label class="mb-0"><h6 class="mb-0 text-sm">State</h6></label>
+								<select name="customer_state" id="stateSelect" onchange="makeSubmenu(this.value)">
+									<option>Choose State</option>
+									{% for i in states %}
+									<option>{{i}}</option>
+									{% endfor %}
+								</select>
+								<!-- <input type="text" name="fname" placeholder="Your State here"> -->
+							</div>
+							<div class="col-md-6">
+								<label class="mb-0"><h6 class="mb-0 text-sm">City</h6></label>
+								<select name="customer_city" id="citySelect">
+									<option>Choose City</option>
+								</select>
+								<!-- <input type="text" name="uname" placeholder="Your city here"> -->
+							</div>
+						</div>
+
+					<div class="row mt-3">
+						<div class="col-md-6">
+							<label class="mb-0"><h6 class="mb-0 text-sm">Profile Picture</h6></label>
+							<input type="file" name="customer_picture" placeholder="Profile Picture">
+						</div>
+						<div class="col-md-6">
+							<label class="mb-0"><h6 class="mb-0 text-sm">Date of birth</h6></label>
+							<input type="date" name="customer_dob">
+						</div>
+					</div>
+
+						
+						<!--<div class="row px-3">
+							<label class="mb-0"><h6 class="mb-0 text-sm">Password</h6></label>
+							<input type="password" name="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;">
+						</div> -->
+	
+						<div class="row px-3 mb-3">
+							<small class="text-muted">By signing up, you agree our <a href="" class="text-primary">Terms of services</a> and <a href="" class="text-primary">Privacy Policy</a></small>
+						</div>
+	
+						<div class="row mb-4">
+							<div class="col-md-6">
+								<button class="btn btn-blue text-center mb-1 py-2">Create Account</button>
+							</div>
+						</div>
+					</form>
+	
+						
+	
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    
+
+
+	
+	
+	<!-- Map -->
+	<div class="map">
+		<div class="size-303" id="google_map" data-map-x="17.35227" data-map-y="78.54940" data-pin="{% static 'main/images/icons/pin.png' %}" data-scrollwhell="0" data-draggable="1" data-zoom="13"></div>
+	</div>
+
+
+
+	<!-- Footer -->
+	<footer class="bg3 p-t-75 p-b-32">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6 col-lg-3 p-b-50">
+					<h4 class="stext-301 cl0 p-b-30">
+						Categories
+					</h4>
+
+					<ul>
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Women
+							</a>
+						</li>
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Men
+							</a>
+						</li>
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Shoes
+							</a>
+						</li>
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Watches
+							</a>
+						</li>
+					</ul>
+				</div>
+
+				<div class="col-sm-6 col-lg-3 p-b-50">
+					<h4 class="stext-301 cl0 p-b-30">
+						Help
+					</h4>
+
+					<ul>
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Track Order
+							</a>
+						</li>
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Returns
+							</a>
+						</li>
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Shipping
+							</a>
+						</li>
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								FAQs
+							</a>
+						</li>
+					</ul>
+				</div>
+
+				<div class="col-sm-6 col-lg-3 p-b-50">
+					<h4 class="stext-301 cl0 p-b-30">
+						GET IN TOUCH
+					</h4>
+
+					<p class="stext-107 cl7 size-201">
+						Any questions? Let us know in store at siris road,Hyderabad, Pincode:500076, T.S or call us on
+						(+91) 8555887986
+					</p>
+
+					<div class="p-t-27">
+						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+							<i class="fa fa-facebook"></i>
+						</a>
+
+						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+							<i class="fa fa-instagram"></i>
+						</a>
+
+						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+							<i class="fa fa-pinterest-p"></i>
+						</a>
+					</div>
+				</div>
+
+				<div class="col-sm-6 col-lg-3 p-b-50">
+					<h4 class="stext-301 cl0 p-b-30">
+						Newsletter
+					</h4>
+
+					<form>
+						<div class="wrap-input1 w-full p-b-4">
+							<input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email"
+								placeholder="email@example.com">
+							<div class="focus-input1 trans-04"></div>
+						</div>
+
+						<div class="p-t-18">
+							<button class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
+								Subscribe
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+
+			<div class="p-t-40">
+				<div class="flex-c-m flex-w p-b-18">
+					<a href="#" class="m-all-1">
+						<img src="{% static 'main/images/icons/icon-pay-01.png' %}" alt="ICON-PAY">
+					</a>
+
+					<a href="#" class="m-all-1">
+						<img src="{% static 'main/images/icons/icon-pay-02.png' %}" alt="ICON-PAY">
+					</a>
+
+					<a href="#" class="m-all-1">
+						<img src="{% static 'main/images/icons/icon-pay-03.png' %}" alt="ICON-PAY">
+					</a>
+
+					<a href="#" class="m-all-1">
+						<img src="{% static 'main/images/icons/icon-pay-04.png' %}" alt="ICON-PAY">
+					</a>
+
+					<a href="#" class="m-all-1">
+						<img src="{% static 'main/images/icons/icon-pay-05.png' %}" alt="ICON-PAY">
+					</a>
+				</div>
+
+				<p class="stext-107 cl6 txt-center">
+					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+					Copyright &copy;
+					<script>document.write(new Date().getFullYear());</script> All rights reserved | Designed &
+					developed by: <a href="#" >FZ INFOTECH</a>
+					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+
+				</p>
+			</div>
+		</div>
+	</footer>
+
+
+	<!-- Back to top -->
+	<div class="btn-back-to-top" id="myBtn">
+		<span class="symbol-btn-back-to-top">
+			<i class="zmdi zmdi-chevron-up"></i>
+		</span>
+	</div>
+
+<!--===============================================================================================-->	
+	<script src="{% static 'main/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'main/vendor/animsition/js/animsition.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'main/vendor/bootstrap/js/popper.js' %}"></script>
+	<script src="{% static 'main/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'main/vendor/select2/select2.min.js' %}"></script>
+	<script>
+		$(".js-select2").each(function(){
+			$(this).select2({
+				minimumResultsForSearch: 20,
+				dropdownParent: $(this).next('.dropDownSelect2')
+			});
+		})
+	</script>
+<!--===============================================================================================-->
+	<script src="{% static 'main/vendor/MagnificPopup/jquery.magnific-popup.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'main/vendor/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
+	<script>
+		$('.js-pscroll').each(function(){
+			$(this).css('position','relative');
+			$(this).css('overflow','hidden');
+			var ps = new PerfectScrollbar(this, {
+				wheelSpeed: 1,
+				scrollingThreshold: 1000,
+				wheelPropagation: false,
+			});
+
+			$(window).on('resize', function(){
+				ps.update();
+			})
+		});
+	</script>
+<!--===============================================================================================-->
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAKFWBqlKAGCeS1rMVoaNlwyayu0e0YRes"></script>
+	<script src="{% static 'main/js/map-custom.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'main/js/main.js' %}"></script>
+
+</body>
+</html>

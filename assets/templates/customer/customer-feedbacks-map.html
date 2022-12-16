@@ -1,0 +1,672 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Feedbacks Map</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="{% static 'main/images/icons/cart.png' %}"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'main/vendor/bootstrap/css/bootstrap.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'main/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'main/fonts/iconic/css/material-design-iconic-font.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'main/fonts/linearicons-v1.0.0/icon-font.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'main/vendor/animate/animate.css' %}">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="{% static 'main/vendor/css-hamburgers/hamburgers.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'main/vendor/animsition/css/animsition.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'main/vendor/select2/select2.min.css' %}">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="{% static 'main/vendor/daterangepicker/daterangepicker.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'main/vendor/slick/slick.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'main/vendor/MagnificPopup/magnific-popup.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'main/vendor/perfect-scrollbar/perfect-scrollbar.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{% static 'main/css/util.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'main/css/main.css' %}">
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <style>
+        /* Container to center the map*/
+        #map {
+            height: 80vh;
+            width: 80vw;
+        }
+        
+    </style>
+<!--===============================================================================================-->
+</head>
+<body class="animsition">
+	
+	<!-- Header -->
+	<header class="header-v3">
+		<!-- Header desktop -->
+		<div class="container-menu-desktop trans-03">
+			<div class="wrap-menu-desktop">
+				<nav class="limiter-menu-desktop p-l-45">
+					
+					<!-- Logo desktop -->		
+					<a href="{% url 'customer_index' %}" class="logo">
+						<h4 style="color: white;">X Mart</h4>
+						<!-- <img src="images/icons/logo-02.png" alt="IMG-LOGO"> -->
+					</a>
+
+					<!-- Menu desktop -->
+					<div class="menu-desktop">
+						<ul class="main-menu">
+							<li>
+								<a href="{% url 'customer_index' %}">Home</a>
+								<!-- <ul class="sub-menu">
+									<li><a href="index.html">Homepage 1</a></li>
+									<li><a href="home-02.html">Homepage 2</a></li>
+									<li><a href="home-03.html">Homepage 3</a></li>
+								</ul> -->
+							</li>
+
+							<li class="label1" data-label1="hot">
+								<a href="{% url 'customer_products' 'all' %}">Shop</a>
+							</li>
+
+							<li >
+								<a href="{% url 'customer_orders' %}">Orders</a>
+							</li>
+							<li >
+								<a href="{% url 'customer_wishlist' %}">Wishlist</a>
+							</li>
+							<li >
+								<a href="{% url 'customer_my_account' %}">My Account</a>
+							</li>
+
+							
+						</ul>
+					</div>		
+
+					<!-- Icon header -->
+					<div class="wrap-icon-header flex-w flex-r-m h-full">							
+						<div class="flex-c-m h-full p-r-25 bor6">
+							<div class="icon-header-item cl0 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify="{{items_count}}">
+								<i class="zmdi zmdi-shopping-cart"></i>
+							</div>
+							<div class="icon-header-item cl0 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-wish" data-notify="{{watchlist_count}}">
+								<i class="zmdi zmdi-favorite "></i>
+							</div>
+							
+						</div>
+						
+
+						<div class="flex-c-m h-full p-r-25 bor6">
+							<div class="icon-header-item cl0 hov-cl1 trans-04 p-lr-11">
+								<a href="{% url 'customer_logout' %}"><button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn2 p-lr-15 trans-04">Log Out</button></a>
+							</div>
+						</div>
+						
+					</div>
+				</nav>
+			</div>	
+		</div>
+
+		<!-- Header Mobile -->
+		<div class="wrap-header-mobile">
+			<!-- Logo moblie -->		
+			<div class="logo-mobile">
+				<a href="{% url 'customer_index' %}"><img src="{% static 'main/images/icons/logo-01.png' %}" alt="IMG-LOGO"></a>
+			</div>
+
+			<!-- Icon header -->
+			<div class="wrap-icon-header flex-w flex-r-m h-full m-r-15">
+				<div class="flex-c-m h-full p-r-5">
+					<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify="{{items_count}}">
+						<i class="zmdi zmdi-shopping-cart"></i>
+					</div>
+					<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-wish" data-notify="{{watchlist_count}}">
+						<i class="zmdi zmdi-favorite"></i>
+					</div>
+				</div>
+			</div>
+
+			<!-- Button show menu -->
+			<div class="btn-show-menu-mobile hamburger hamburger--squeeze">
+				<span class="hamburger-box">
+					<span class="hamburger-inner"></span>
+				</span>
+			</div>
+		</div>
+
+
+		<!-- Menu Mobile -->
+		<div class="menu-mobile">
+			<ul class="main-menu-m">
+				<li>
+					<a href="{% url 'customer_index' %}">Home</a>
+					<!-- <ul class="sub-menu-m">
+						<li><a href="index.html">Homepage 1</a></li>
+						<li><a href="home-02.html">Homepage 2</a></li>
+						<li><a href="home-03.html">Homepage 3</a></li>
+					</ul>
+					<span class="arrow-main-menu-m">
+						<i class="fa fa-angle-right" aria-hidden="true"></i>
+					</span> -->
+				</li>
+
+				<li>
+					<a href="{% url 'customer_products' 'all' %}" class="label1 rs1" data-label1="hot">Shop</a>
+				</li>
+
+				<li>
+					<a href="{% url 'customer_orders' %}" >Orders</a>
+				</li>
+
+				<li>
+					<a href="{% url 'customer_wishlist' %}">Wishlist</a>
+				</li>
+
+				<li>
+					<a href="{% url 'customer_my_account' %}">My Account</a>
+				</li>
+				<li>
+                    <a href="{% url 'customer_logout' %}">Log Out</a>
+                </li>
+			</ul>
+		</div>
+
+		<!-- Modal Search -->
+		<div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
+			<button class="flex-c-m btn-hide-modal-search trans-04">
+				<i class="zmdi zmdi-close"></i>
+			</button>
+
+			<form class="container-search-header">
+				<div class="wrap-search-header">
+					<input class="plh0" type="text" name="search" placeholder="Search...">
+
+					<button class="flex-c-m trans-04">
+						<i class="zmdi zmdi-search"></i>
+					</button>
+				</div>
+			</form>
+		</div>
+	</header>
+
+    	<!-- Title page -->
+	<section class="bg-img1 txt-center p-lr-15 p-tb-40" style="background-color: rgb(36, 33, 33);">
+		
+	</section>
+
+	<!-- Cart -->
+	<div class="wrap-header-cart js-panel-cart">
+		<div class="s-full js-hide-cart"></div>
+
+		<div class="header-cart flex-col-l p-l-65 p-r-25">
+			<div class="header-cart-title flex-w flex-sb-m p-b-8">
+				<span class="mtext-103 cl2">
+					Your Cart
+				</span>
+
+				<div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
+					<i class="zmdi zmdi-close"></i>
+				</div>
+			</div>
+			
+			<div class="header-cart-content flex-w js-pscroll">
+				<ul class="header-cart-wrapitem w-full">
+					{% for i in items %}
+					<li class="header-cart-item flex-w flex-t m-b-12">
+						<div class="header-cart-item-img">
+							<img src="/media/{{i.cart_product.product_picture1}}" alt="IMG">
+						</div>
+
+						<div class="header-cart-item-txt p-t-8">
+							<a href="{% url 'customer_product_details'  i.cart_product.product_id %}" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+								{{i.cart_product.product_name}}
+							</a>
+
+							<span class="header-cart-item-info">
+								{{i.cart_product_qty}} x ₹{{i.cart_product.product_price}}
+							</span>
+						</div>
+					</li>
+					{% endfor %}
+
+					
+				</ul>
+				
+				<div class="w-full">
+					<div class="header-cart-total w-full p-tb-40">
+						<!-- Total: $75.00 -->
+					</div>
+
+					<div class="header-cart-buttons flex-w w-full">
+						<a href="{% url 'customer_cart' %}" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-r-8 m-b-10">
+							View Cart
+						</a>
+
+						<a href="{% url 'customer_address' %}" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+							Check Out
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- wishlist -->
+	<div class="wrap-header-cart js-panel-wish">
+		<div class="s-full js-hide-cart"></div>
+
+		<div class="header-cart flex-col-l p-l-65 p-r-25">
+			<div class="header-cart-title flex-w flex-sb-m p-b-8">
+				<span class="mtext-103 cl2">
+					Your Wishlist
+				</span>
+
+				<div class="fs-35 lh-10 cl2 p-lr-5 pointer hov-cl1 trans-04 js-hide-cart">
+					<i class="zmdi zmdi-close"></i>
+				</div>
+			</div>
+			
+			<div class="header-cart-content flex-w js-pscroll">
+				<ul class="header-cart-wrapitem w-full">
+					{% for i in wishlist %}
+					<li class="header-cart-item flex-w flex-t m-b-12">
+						<div class="header-cart-item-img">
+							<a href="{% url 'change_watchlist' i.product_id 'customer_products' %}">
+								<img src="/media/{{i.product_picture1}}" alt="IMG">
+							</a>
+							
+						</div>
+
+						<div class="header-cart-item-txt p-t-8">
+							<a href="{% url 'customer_product_details'  i.product_id %}" class="header-cart-item-name m-b-18 hov-cl1 trans-04">
+								{{i.product_name}}
+							</a>
+
+							<span class="header-cart-item-info">
+								{{i.product_price}}
+							</span>
+						</div>
+					</li>
+					{% endfor %}
+					
+				</ul>
+				
+				<div class="w-full">
+					<div class="header-cart-total w-full p-tb-40">
+						Total: {{watchlist_count}}
+					</div>
+
+					<div class="header-cart-buttons flex-w w-full">
+						<a href="{% url 'customer_wishlist' %}" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+							View All
+						</a>
+
+						<!-- <a href="{% url 'customer_cart' %}" class="flex-c-m stext-101 cl0 size-107 bg3 bor2 hov-btn3 p-lr-15 trans-04 m-b-10">
+							Check Out
+						</a> -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- breadcrumb -->
+	<div class="container">
+		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+			<a href="{% url 'customer_index' %}" class="stext-109 cl8 hov-cl1 trans-04">
+				Home
+				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+			</a>
+
+			<a href="{% url 'customer_products' 'all' %}" class="stext-109 cl8 hov-cl1 trans-04">
+				Products
+				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+			</a>
+
+			<span class="stext-109 cl4">
+				Feedbacks
+			</span>
+		</div>
+	</div>
+		
+
+	<!-- Product Detail -->
+	<section class="sec-product-detail bg0 p-t-65 p-b-60">
+		<div class="container">
+			<div id="map"></div>
+
+		
+	</section>
+
+
+	<!-- Related Products -->
+		
+
+	<!-- Footer -->
+	<footer class="bg3 p-t-75 p-b-32">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6 col-lg-3 p-b-50">
+					<h4 class="stext-301 cl0 p-b-30">
+						Categories
+					</h4>
+
+					<ul>
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Women
+							</a>
+						</li>
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Men
+							</a>
+						</li>
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Shoes
+							</a>
+						</li>
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Watches
+							</a>
+						</li>
+					</ul>
+				</div>
+
+				<div class="col-sm-6 col-lg-3 p-b-50">
+					<h4 class="stext-301 cl0 p-b-30">
+						Help
+					</h4>
+
+					<ul>
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Track Order
+							</a>
+						</li>
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Returns
+							</a>
+						</li>
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								Shipping
+							</a>
+						</li>
+
+						<li class="p-b-10">
+							<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+								FAQs
+							</a>
+						</li>
+					</ul>
+				</div>
+
+				<div class="col-sm-6 col-lg-3 p-b-50">
+					<h4 class="stext-301 cl0 p-b-30">
+						GET IN TOUCH
+					</h4>
+
+					<p class="stext-107 cl7 size-201">
+						Any questions? Let us know in store at siris road,Hyderabad, Pincode:500076, T.S or call us on
+						(+91) 8555887986
+					</p>
+
+					<div class="p-t-27">
+						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+							<i class="fa fa-facebook"></i>
+						</a>
+
+						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+							<i class="fa fa-instagram"></i>
+						</a>
+
+						<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+							<i class="fa fa-pinterest-p"></i>
+						</a>
+					</div>
+				</div>
+
+				<div class="col-sm-6 col-lg-3 p-b-50">
+					<h4 class="stext-301 cl0 p-b-30">
+						Newsletter
+					</h4>
+
+					<form>
+						<div class="wrap-input1 w-full p-b-4">
+							<input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email"
+								placeholder="email@example.com">
+							<div class="focus-input1 trans-04"></div>
+						</div>
+
+						<div class="p-t-18">
+							<button class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
+								Subscribe
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+
+			<div class="p-t-40">
+				<div class="flex-c-m flex-w p-b-18">
+					<a href="#" class="m-all-1">
+						<img src="{% static 'main/images/icons/icon-pay-01.png' %}" alt="ICON-PAY">
+					</a>
+
+					<a href="#" class="m-all-1">
+						<img src="{% static 'main/images/icons/icon-pay-02.png' %}" alt="ICON-PAY">
+					</a>
+
+					<a href="#" class="m-all-1">
+						<img src="{% static 'main/images/icons/icon-pay-03.png' %}" alt="ICON-PAY">
+					</a>
+
+					<a href="#" class="m-all-1">
+						<img src="{% static 'main/images/icons/icon-pay-04.png' %}" alt="ICON-PAY">
+					</a>
+
+					<a href="#" class="m-all-1">
+						<img src="{% static 'main/images/icons/icon-pay-05.png' %}" alt="ICON-PAY">
+					</a>
+				</div>
+
+				<p class="stext-107 cl6 txt-center">
+					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+					Copyright &copy;
+					<script>document.write(new Date().getFullYear());</script> All rights reserved | Designed &
+					developed by: <a href="#">FZ INFOTECH</a>
+					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+
+				</p>
+			</div>
+		</div>
+	</footer>
+
+
+	{% if messages %}              
+	{% for message in messages %}
+	  {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+		  <script>swal({
+			title: "Error :",
+			text: "{{message}}",
+			icon: "warning",
+			button: "OK",
+		  });
+		</script>
+		
+	  {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+		  <script>swal({
+			title: "Success :)",
+			text: "{{message}}",
+			icon: "success",
+			button: "OK",
+		  });
+		</script>
+	  {% endif %}              
+	{% endfor %} 
+  {% endif %}
+	<!-- Back to top -->
+	<div class="btn-back-to-top" id="myBtn">
+		<span class="symbol-btn-back-to-top">
+			<i class="zmdi zmdi-chevron-up"></i>
+		</span>
+	</div>
+
+
+<!--===============================================================================================-->	
+	<script src="{% static 'main/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'main/vendor/animsition/js/animsition.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'main/vendor/bootstrap/js/popper.js' %}"></script>
+	<script src="{% static 'main/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'main/vendor/select2/select2.min.js' %}"></script>
+	<script>
+		$(".js-select2").each(function(){
+			$(this).select2({
+				minimumResultsForSearch: 20,
+				dropdownParent: $(this).next('.dropDownSelect2')
+			});
+		})
+	</script>
+<!--===============================================================================================-->
+	<script src="{% static 'main/vendor/daterangepicker/moment.min.js' %}"></script>
+	<script src="{% static 'main/vendor/daterangepicker/daterangepicker.js' %}"></script>
+<!--=========================={% static 'main/=====================================================================-->
+	<script src="{% static 'main/vendor/slick/slick.min.js' %}"></script>
+	<script src="{% static 'main/js/slick-custom.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'main/vendor/parallax100/parallax100.js' %}"></script>
+	<script>
+        $('.parallax100').parallax100();
+	</script>
+<!--===============================================================================================-->
+	<script src="{% static 'main/vendor/MagnificPopup/jquery.magnific-popup.min.js' %}"></script>
+	<script>
+		$('.gallery-lb').each(function() { // the containers for all your galleries
+			$(this).magnificPopup({
+		        delegate: 'a', // the selector for gallery item
+		        type: 'image',
+		        gallery: {
+		        	enabled:true
+		        },
+		        mainClass: 'mfp-fade'
+		    });
+		});
+	</script>
+    <script>
+        // center: {lat: 17.4464, lng: 78.5684 }
+        function initMap() {
+			let data_form='{{feedback_data | safe }}';
+			console.log(data_form)
+			var locations_list1 = JSON.parse("[" + data_form + "]");
+			console.log(locations_list1[0][0])
+			let locations_list = locations_list1[0]
+            let mapOptions = {
+                center: new google.maps.LatLng('17.4464', '78.5684'),
+                zoom: 5,
+            }
+
+            let map = new google.maps.Map(document.getElementById('map'),mapOptions);
+            
+            var icon = {
+                url: "{% static 'admin/assets/img/speech2.png' %}", // url
+                scaledSize: new google.maps.Size(42, 42), // size
+            };
+            
+			
+
+            for (i in locations_list){
+                // console.log(locations_list[i])
+                // var loc = locations_list[i]["name"]
+                // console.log(loc)
+                let coords0 = locations_list[i]["lat"]
+                let coords1 = locations_list[i]["lng"]
+                let number = locations_list[i]["count"]
+				let city = locations_list[i]["city"]
+				let product_id = locations_list[i]["product_id"]
+                                console.log(coords0)
+                console.log(coords1)
+                let markerOptions = {
+                    position: new google.maps.LatLng(coords0,coords1),
+                    map:map,
+                    icon:icon,
+                    animation: google.maps.Animation.DROP,
+                    label:{
+                        text: number,
+                        color:'#FFFFFF',
+                        fontSize: '14px',
+                        fontWeight: 'bolder',
+                    }
+                }
+
+                let marker = new google.maps.Marker(markerOptions)
+
+				const infowindow = new google.maps.InfoWindow({
+                    content: `<h1>Reviews</h1><br>
+								<h4 class="text-success">Positive: ${locations_list[i]["positive"]}<br>
+								<h4 class="text-warning">Neutral: ${locations_list[i]["neutral"]}<br>
+								<h4 class="text-danger">Negative: ${locations_list[i]["negative"]}</h4><br>
+								<a href="${product_id}/${city}"><button class="btn btn-primary">View Reviews</button></a>`,
+                });
+
+
+                marker.addListener("click", () => {
+                    infowindow.open({
+                    anchor: marker,
+                    map,
+                    shouldFocus: false,
+                    });
+                });
+                //end
+            }
+
+        }
+
+    </script>
+<!--===============================================================================================-->
+	<script src="{% static 'main/vendor/isotope/isotope.pkgd.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{% static 'main/vendor/sweetalert/sweetalert.min.js' %}"></script>
+	
+<!--===============================================================================================-->
+	<script src="{% static 'main/vendor/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
+	<script>
+		$('.js-pscroll').each(function(){
+			$(this).css('position','relative');
+			$(this).css('overflow','hidden');
+			var ps = new PerfectScrollbar(this, {
+				wheelSpeed: 1,
+				scrollingThreshold: 1000,
+				wheelPropagation: false,
+			});
+
+			$(window).on('resize', function(){
+				ps.update();
+			})
+		});
+	</script>
+<!--===============================================================================================-->
+	<script src="{% static 'main/js/main.js' %}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{api_key}}&callback=initMap"></script>
+
+</body>
+</html>
