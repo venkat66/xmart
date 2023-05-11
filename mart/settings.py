@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-7azzi^#5ittkl%_3^*n0orfqya(61y!ogr(h9wd*c6u_jds-wq'
+SECRET_KEY = ''
 
 STATES_LIST =["Andhra_Pradesh","Arunachal_Pradesh ","Assam","Bihar","Chhattisgarh","Goa","Gujarat","Haryana","Himachal_Pradesh","Jammu_and_Kashmir","Jharkhand","Karnataka","Kerala","Madhya_Pradesh","Maharashtra","Manipur","Meghalaya","Mizoram","Nagaland","Odisha","Punjab","Rajasthan","Sikkim","Tamil_Nadu","Telangana","Tripura","Uttar_Pradesh","Uttarakhand","West_Bengal","Andaman_and_Nicobar_Islands","Chandigarh","Dadra_and_Nagar_Haveli","Daman_and_Diu","Lakshadweep","National_Capital_Territory_of_Delhi","Puducherry"]
 
